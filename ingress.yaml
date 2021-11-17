@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: orange-apple-ingress
+spec:
+  tls:
+  - hosts:
+    - cloudnativeapps.work
+    secretName: ingress-secret
+  rules:
+  - host: cloudnativeapps.work
+    http:
+      paths:
+      - path: /orange
+        pathType: Prefix
+        backend:
+          service:
+            name: orange-svc
+            port:
+              number: 80
+      - path: /apple
+        pathType: Prefix
+        backend:
+          service:
+            name: apple-svc
+            port:
+              number: 80

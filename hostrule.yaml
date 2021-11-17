@@ -1,0 +1,25 @@
+apiVersion: ako.vmware.com/v1alpha1
+kind: HostRule
+metadata:
+  name: my-host-rule
+  namespace: red
+spec:
+  virtualhost:
+    fqdn: foo.com # mandatory
+    enableVirtualHost: true
+    tls: # optional
+      sslKeyCertificate:
+        name: avi-ssl-key-cert
+        type: ref
+      sslProfile: avi-ssl-profile
+      termination: edge
+    httpPolicy: 
+      policySets:
+      - avi-secure-policy-ref
+      overwrite: false
+    datascripts:
+    - avi-datascript-redirect-app1
+    wafPolicy: avi-waf-policy
+    applicationProfile: avi-app-ref
+    analyticsProfile: avi-analytics-ref
+    errorPageProfile: avi-errorpage-ref

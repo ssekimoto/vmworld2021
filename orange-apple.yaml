@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orange
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: orange
+  template:
+    metadata:
+      labels:
+        app: orange
+    spec:
+      containers:
+      - name: orange
+        image: naokideguchi/hello-ingress-orange
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orange-svc
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: orange
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apple
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: apple 
+  template:
+    metadata:
+      labels:
+        app: apple 
+    spec:
+      containers:
+      - name: apple
+        image: naokideguchi/hello-ingress-apple
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apple-svc
+  labels:
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: apple
